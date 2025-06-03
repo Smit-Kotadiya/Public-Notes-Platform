@@ -1,17 +1,17 @@
 FROM opensuse/leap:15.5
 
-# Install tools and CA certificates
-RUN zypper refresh && \
-    zypper install -y wget tar gzip ca-certificates
+RUN zypper install -y wget tar && \
+    mkdir -p /data/db && \
+    chown -R $(whoami) /data/db
 
-# Download and extract MongoDB
-RUN wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-6.0.6.tgz && \
-    tar -xzf mongodb-linux-x86_64-6.0.6.tgz && \
-    mv mongodb-linux-x86_64-6.0.6 /mongodb && \
-    mkdir -p /data/db
+RUN wget https://repo.mongodb.org/zypper/suse/15/mongodb-org/5.0/x86_64/RPMS/mongodb-org-mongos-5.0.1-1.suse15.x86_64.rpm &&\
+    wget https://repo.mongodb.org/zypper/suse/15/mongodb-org/5.0/x86_64/RPMS/mongodb-org-server-5.0.1-1.suse15.x86_64.rpm &&\
+    wget https://repo.mongodb.org/zypper/suse/15/mongodb-org/5.0/x86_64/RPMS/mongodb-org-shell-5.0.1-1.suse15.x86_64.rpm &&\
+    wget https://repo.mongodb.org/zypper/suse/15/mongodb-org/5.0/x86_64/RPMS/mongodb-org-tools-5.0.1-1.suse15.x86_64.rpm
 
-# Expose MongoDB port
-EXPOSE 27017
+RUN rpm --import https://pgp.mongodb.com/server-5.0.asc &&\
+    zypper install ./mongodb-org-*.rpm &&\
+    mongod --dbpath /data/db --fork --logpath /var/log/mongod.log &&\
+    mongo
 
-# Start MongoDB
-CMD ["/mongodb/bin/mongod", "--dbpath", "/data/db", "--bind_ip_all"]
+EXPOSE "27017"
