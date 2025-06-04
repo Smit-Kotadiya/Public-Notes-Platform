@@ -15,4 +15,4 @@ RUN rpm --import https://pgp.mongodb.com/server-5.0.asc &&\
 
 EXPOSE "27017"
 
-CMD ["mongod", "--dbpath", "/data/db"]
+CMD ["mongod", "--bind_ip_all", "--dbpath", "/data/db"]
