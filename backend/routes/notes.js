@@ -1,33 +1,26 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const Note = require("../models/note");
-const User = require("../models/user");
+const Note = require('../models/Note');
 
-// Create a note
-router.post("/", async (req, res) => {
-  const { email, content, tags } = req.body;
-  const note = new Note({ content, tags, owner: email });
-  await note.save();
-
-  let user = await User.findOne({ email });
-  if (!user) user = new User({ email, noteIds: [] });
-
-  user.noteIds.push(note._id);
-  await user.save();
-
-  res.json({ message: "Note saved", note });
+// POST /notes - create a new note
+router.post('/notes', async (req, res) => {
+  try {
+    const note = new Note(req.body);
+    await note.save();
+    res.status(201).json(note);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
-// Get notes by tag
-router.get("/tag/:tag", async (req, res) => {
-  const notes = await Note.find({ tags: req.params.tag });
-  res.json(notes);
-});
-
-// Get notes by user
-router.get("/user/:email", async (req, res) => {
-  const notes = await Note.find({ owner: req.params.email });
-  res.json(notes);
+// GET /notes - get all notes
+router.get('/notes', async (req, res) => {
+  try {
+    const notes = await Note.find();
+    res.json(notes);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 module.exports = router;
