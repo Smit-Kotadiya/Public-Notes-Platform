@@ -1,0 +1,10 @@
+{
+  "_id": 101,
+  "title": "Maths",
+  "content": "x^2 + y^2 = 1. It is the equation of a Circle",
+  "author": "user1",
+  "tags": ["maths","circle"]
+}
+{
+  ....
+}
