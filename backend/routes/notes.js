@@ -3,20 +3,8 @@ const router = express.Router();
 const Note = require('../models/note');
 const User = require("../models/user");
 
-//POST - /api/login
-router.post("/login", async (req, res) => {
-  const { email } = req.body;
-  const user = await User.findOne({ email });
-
-  if (user) {
-    return res.json({ message: 'Login successful' });
-  } else {
-    return res.status(401).json({ message: 'Login failed' });
-  }
-});
-
 // POST /api/notes - create a new note
-router.post('/notes', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const {title, content, tags, author} = req.body;
 
@@ -41,7 +29,7 @@ router.post('/notes', async (req, res) => {
   });
 
 //DELETE /api/notes/:id - delete a note
-router.delete('/notes/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const noteId = req.params.id;
 
@@ -72,7 +60,7 @@ router.delete('/notes/:id', async (req, res) => {
 });
 
 //PATCH - /notes/:id - Edit Notes
-router.patch('/notes/:id', async (req,res) => {
+router.patch('/:id', async (req,res) => {
   try {
     const noteId = req.params.id;
     const { title, content, tags, author} = req.body;
@@ -98,8 +86,8 @@ router.patch('/notes/:id', async (req,res) => {
   }
 });
 
-//GET /api/notes/search - Search by Tag
-router.get('/notes/search', async (req,res) => {
+//GET /api/notes/search?tag= - Search by Tag
+router.get('/search', async (req,res) => {
   try {
     let tags = req.query.tag;
 
@@ -113,8 +101,8 @@ router.get('/notes/search', async (req,res) => {
   }
 });
 
-//GET /api/notes/search - Get all notes of a User/Author
-router.get('/notes/author', async (req,res) => {
+//GET /api/notes/author?author= - Get all notes of an Author
+router.get('/author', async (req,res) => {
   try {
     let requested_author = req.query.author;
 
@@ -127,7 +115,7 @@ router.get('/notes/author', async (req,res) => {
   }
 });
 // GET /api/notes - get all notes
-router.get('/notes', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const notes = await Note.find();
     res.json(notes);

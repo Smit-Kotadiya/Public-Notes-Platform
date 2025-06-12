@@ -2,17 +2,16 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require('cors');
 const notes = require('./routes/notes');
+const users = require('./routes/users');
 require("dotenv").config();
 
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true,
-}))
+app.use(cors())
 app.use(express.json())
-app.use('/api', notes);
+app.use('/api/notes', notes);
+app.use('/api/users', users);
 
 
 //Connection to MongoDB
