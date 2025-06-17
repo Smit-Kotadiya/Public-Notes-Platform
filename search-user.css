@@ -1,0 +1,82 @@
+body {
+  background-color: #f8f9fa;
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+
+#user-list div {
+  margin: 5px 0;
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
+
+.note-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: #f4f4f4;
+}
+.note-card h3 {
+  margin-top: 0;
+}
+.note-card hr {
+  margin: 5px 0;
+}
+.user-box {
+  border: 1px dotted #ccc;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+
+.email-link {
+  text-decoration: underline;
+  color: black;
+  cursor: pointer;
+}
+
+.email-link:hover {
+  color: #555;
+}
+.user-box {
+  border: 1px dotted #ccc;
+  padding: 8px;
+  margin: 6px 0;
+  border-radius: 6px;
+}
+
+.user-name {
+  font-weight: bold;
+  text-decoration: underline;
+  color: black;
+}
+
+.user-email {
+  text-decoration: underline;
+  color: #000; /* black, not default blue */
+  font-style: italic;
+}
+.redirect-button {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 20px;
+  background-color: #0077cc;  /* Primary color */
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.redirect-button:hover {
+  background-color: #005fa3; /* Slightly darker on hover */
+}
+#logout-btn
+{
+   border: none;
+   float: right;
+}

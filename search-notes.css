@@ -1,0 +1,48 @@
+body {
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+input {
+  padding: 6px;
+  width: 300px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 6px 12px;
+}
+
+.note-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: #f9f9f9;
+}
+.note-card h3 {
+  margin-top: 0;
+}
+.note-card hr {
+  margin: 5px 0;
+}
+.redirect-button {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 20px;
+  background-color: #0077cc;  /* Primary color */
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.redirect-button:hover {
+  background-color: #005fa3; /* Slightly darker on hover */
+}
+#logout-btn
+{
+   border: none;
+   float: right;
+}

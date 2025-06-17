@@ -2,54 +2,32 @@
 <html>
 <head>
   <title>Your Notes</title>
-  <style>
-    body { font-family: Arial; padding: 20px; }
-    .note { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
-    .note h3 { margin: 0; }
-  </style>
+  <link rel="stylesheet" href="feed.css">
 </head>
 <body>
+  
+  <div class="container">
+    <div class="sidebar">
+      <a href="search-notes.html" class="redirect-button">Search Notes</a>
+      <a href="search-user.html" class="redirect-button">Search User</a>
+      <button id="logout-btn" class="redirect-button">Logout</button>
+
+  </div>
+
+  </div>
   <h1>Your Notes</h1>
+  <button id="create-note-btn" title="Create New Note">+</button>
   <div id="notes-container"></div>
-
-  <script>
-    const userEmail = localStorage.getItem("userEmail");
-
-    if (!userEmail) {
-      alert("Not logged in!");
-      window.location.href = "login.html";
-    }
-    else {
-      fetch(`http://localhost:3000/api/users/author?email=${userEmail}`)
-      .then(res => res.json())
-      .then(userData => {
-        const author = userData.author;
-        
-        return fetch(`http://localhost:3000/api/notes/author?author=${author}`);
-      })
-      .then(res => res.json())
-      .then(notes => {
-        const container = document.getElementById("notes-container");
-        if (notes.length === 0) {
-          container.innerHTML = "<p>No notes found.</p>";
-        } else {
-          notes.forEach(note => {
-            const div = document.createElement("div");
-            div.className = "note";
-            div.innerHTML = `
-              <h3>${note.title}</h3>
-              <p>${note.content}</p>
-              <p><strong>Tags:</strong> ${note.tags.join(', ')}</p>
-            `;
-            container.appendChild(div);
-          });
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Error" + err.message);
-      });
-    }
-  </script>
+  <div id="edit-modal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Edit Note</h2>
+    <input type="text" id="edit-title" placeholder="Title"><br>
+    <textarea id="edit-content" placeholder="Content"></textarea><br>
+    <input type="text" id="edit-tags" placeholder="Tags (comma-separated)"><br>
+    <button onclick="submitEdit()">Save</button>
+    <button onclick="closeEditModal()">Cancel</button>
+  </div>
+</div>
+ <script src="feed.js"> </script>
 </body>
 </html>

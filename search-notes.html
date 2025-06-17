@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Notes</title>
+  <link rel="stylesheet" href="search-notes.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <a href="feed.html" class="redirect-button">Personal Feed -> Create Notes</a>
+      <a href="search-user.html" class="redirect-button">Search User</a>            <button id="logout-btn" class="redirect-button">Logout</button>
+  </div>
+  <h1>Search Notes by Tags</h1>
+  <input type="text" id="tag-input" placeholder="Enter tags (comma-separated)">
+  <button onclick="searchNotes()">Search</button>
+
+  <div id="results"></div>
+
+  <script src="search-notes.js"></script>
+</body>
+</html>

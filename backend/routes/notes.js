@@ -37,7 +37,7 @@ router.delete('/:id', async (req, res) => {
     const note = await Note.findById(noteId);
     if(!note) return res.status(404).json({error: 'Note not found'});
 
-    if(note.author !== req.body.author)
+    if(note.author !== req.body.loggedInUser)
     {
       return res.status(403).json({ error: "Unauthorized to delete this note"});
     }
@@ -63,15 +63,14 @@ router.delete('/:id', async (req, res) => {
 router.patch('/:id', async (req,res) => {
   try {
     const noteId = req.params.id;
-    const { title, content, tags, author} = req.body;
+    const { title, content, tags, loggedInUser} = req.body;
 
     const note = await Note.findById(noteId);
     if(!note) return res.status(404).json({error: 'Note not found'});
 
-    if(note.author !== author)
+    if(note.author !== loggedInUser)
     {
         return res.status(403).json({ error: 'Unauthorized to edit this note'});
-
     }
 
   if(title) note.title = title;

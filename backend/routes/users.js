@@ -31,8 +31,8 @@ router.post("/login", async (req, res) => {
   }});
 
 
-  //GET /api/users/author?email= -> Get name of the user through email
-  router.get('/author', async (req,res) => {
+  //GET /api/users/name?email= -> Get name of the user through email
+  router.get('/name', async (req,res) => {
     const { email } = req.query;
     if(!email) return res.status(400).json({ error: "Email is required"});
 
@@ -40,12 +40,23 @@ router.post("/login", async (req, res) => {
       const user = await User.findOne({ email });
       if (!user) return res.status(404).json({ error: "User not found"});
 
-      res.json({ author: user.name});
+      res.json({ name: user.name});
     } catch (err) {
       res.staus(500).json({ error: err.message});
     }
  
   });
+
+//GET - /api/users/name-email -> Use to display a table of All the user and their respective email address
+// Fetch all users with name and email
+router.get('/name-email', async (req, res) => {
+  try {
+    const users = await User.find({}, {_id: 0, name: 1, email: 1}); // only name & email
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 //GET - /api/users -> show all the users (only for testing)
 router.get('/', async (req,res) => {
