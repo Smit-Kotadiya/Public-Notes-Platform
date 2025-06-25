@@ -1,14 +1,35 @@
  body { font-family: Arial; padding: 20px; }
+ #notes-container
+ {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  justify-items: center;
+}
 .note { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
-.note h3 { margin: 0; }
 .note-card 
-    {
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 15px;
-      margin: 15px 0;
-      background: #f9f9f9;
-    }
+{
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  width: 100%;
+  max-width: 260px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background: white;
+  margin: 1rem auto;
+  max-width: 600px;
+}
+.note h3 { margin: 0; }
+.note-card hr {
+  margin: 0.5rem 0;
+}
+
+.note-card p {
+  margin: 0.3rem 0;
+}
 .note-header 
    {
       display: flex;
@@ -54,7 +75,7 @@ hr {
 
 .modal-content input[type="text"],
 .modal-content textarea {
-  width: 100%;
+  width: 95%;
   padding: 12px;
   margin: 10px 0;
   font-size: 16px;

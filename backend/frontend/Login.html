@@ -17,6 +17,9 @@
       padding: 8px;
       margin: 8px 0;
     }
+    input {
+      width: 95.4%;
+    }
   </style>
 </head>
 <body>
@@ -30,7 +33,7 @@
     document.getElementById('login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('email').value;
-         const res = await fetch('http://localhost:3000/api/users/login', {
+         const res = await fetch('/api/users/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email })

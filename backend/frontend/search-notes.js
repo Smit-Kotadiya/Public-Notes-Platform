@@ -7,8 +7,9 @@ function searchNotes() {
     return;
   }
 
-const queryParams = tags.map(tag => `tag=${encodeURIComponent(tag)}`).join('&');
-const url = `http://localhost:3000/api/notes/search?${queryParams}`;
+  const matchType = document.querySelector('input[name="matchType"]:checked')?.value || "any";
+  const queryParams = tags.map(tag => `tag=${encodeURIComponent(tag)}`).join('&');
+  const url = `/api/notes/search?${queryParams}&matchType=${matchType}`;
 
   fetch(url)
     .then(res => res.json())
@@ -42,3 +43,8 @@ const url = `http://localhost:3000/api/notes/search?${queryParams}`;
       alert("Error: " + err.message);
     });
 }
+
+document.getElementById("logout-btn").addEventListener("click", () => {
+  localStorage.removeItem("userEmail");
+  window.location.href = "login.html";
+});

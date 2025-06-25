@@ -1,11 +1,14 @@
 window.onload = () => {
-  fetch("http://localhost:3000/api/users/name-email")
+  fetch("/api/users/name-email")
     .then(res => res.json())
     .then(users => {
       const userList = document.getElementById("user-list");
       const container = document.getElementById("user-list");
-      const currentUserEmail = sessionStorage.getItem("userEmail");
+      console.log("userEmail: ", users.email);
+      const currentUserEmail = localStorage.getItem("userEmail");
     users.forEach(user => {
+      console.log("user.email: ", user.email);
+      console.log("currentUserEmail: ", currentUserEmail);
      if (user.email !== currentUserEmail) {
         const box = document.createElement("div");
         box.className = "user-box";
@@ -27,11 +30,11 @@ window.onload = () => {
     });
 })}
 function loadUserNotes(email) {
-  fetch(`http://localhost:3000/api/users/name?email=${email}`)
+  fetch(`/api/users/name?email=${email}`)
     .then(res => res.json())
     .then(userData => {
       if (!userData || !userData.name) throw new Error("User not found.");
-      return fetch(`http://localhost:3000/api/notes/author?author=${userData.name}`);
+      return fetch(`/api/notes/author?author=${userData.name}`);
     })
     .then(res => res.json())
     .then(notes => {
@@ -62,3 +65,8 @@ function loadUserNotes(email) {
       alert("Error: " + err.message);
     });
 }
+
+document.getElementById("logout-btn").addEventListener("click", () => {
+  localStorage.removeItem("userEmail");
+  window.location.href = "login.html";  // Redirect to login page
+});

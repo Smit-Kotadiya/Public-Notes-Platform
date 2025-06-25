@@ -86,19 +86,34 @@ router.patch('/:id', async (req,res) => {
 });
 
 //GET /api/notes/search?tag= - Search by Tag
-router.get('/search', async (req,res) => {
+router.get("/search", async (req, res) => {
   try {
-    let tags = req.query.tag;
+    const { tag, matchType = "any" } = req.query;  // ✅ Correctly use req.query
 
-    if(!tags) return res.status(404).json({error: "At least one tag required"})
-    if(!Array.isArray(tags)) tags = [tags];
+    let tags = [];
 
-    const notes = await Note.find({ tags: { $in : tags}})
-    res.status(200).json(notes);
+    if (Array.isArray(tag)) {
+      tags = tag;
+    } else if (typeof tag === "string") {
+      tags = tag.split(",").map(t => t.trim()).filter(t => t);
+    }
+
+    if (!tags.length) {
+      return res.status(400).json({ error: "No tags provided." });
+    }
+
+    const filter = matchType === "all"
+      ? { tags: { $all: tags } }
+      : { tags: { $in: tags } };
+
+    const notes = await Note.find(filter).sort({ createdAt: -1 });
+    res.json(notes);
   } catch (err) {
-    res.status(500).json({ error: err.message});
+    console.error("Search error:", err);
+    res.status(500).json({ error: "Server error during tag search" });
   }
 });
+
 
 //GET /api/notes/author?author= - Get all notes of an Author
 router.get('/author', async (req,res) => {

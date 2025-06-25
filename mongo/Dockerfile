@@ -8,14 +8,14 @@ RUN zypper install -y wget tar shadow &&\
     mkdir -p /data/db && \
     chown -R mongodb:mongodb /data/db
 
-RUN wget https://repo.mongodb.org/zypper/suse/15/mongodb-org/5.0/x86_64/RPMS/mongodb-org-mongos-5.0.1-1.suse15.x86_64.rpm &&\
-    wget https://repo.mongodb.org/zypper/suse/15/mongodb-org/5.0/x86_64/RPMS/mongodb-org-server-5.0.1-1.suse15.x86_64.rpm &&\ 
-    wget https://repo.mongodb.org/zypper/suse/15/mongodb-org/5.0/x86_64/RPMS/mongodb-org-shell-5.0.1-1.suse15.x86_64.rpm
-
-RUN rpm --import https://pgp.mongodb.com/server-5.0.asc &&\
-    zypper install -y ./mongodb-org-*.rpm
+RUN wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-suse15-7.0.21.tgz &&\
+    zypper install -y gzip &&\
+    tar -xvzf mongodb-linux-x86_64-suse15-7.0.21.tgz &&\
+    mv mongodb-linux-x86_64-suse15-7.0.21 /opt/mongodb &&\
+    ln -s /opt/mongodb/bin/* /usr/local/bin/ &&\
+    rm mongodb-linux-x86_64-suse15-7.0.21.tgz
 
 EXPOSE "27017"
 
+USER mongodb
 CMD ["mongod", "--bind_ip_all", "--dbpath", "/data/db"]
-#Download latest version from MongoDB community

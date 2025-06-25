@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Notes</title>
+  <link rel="stylesheet" href="search-notes.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <a href="feed.html" class="redirect-button">Personal Feed/Create Notes</a>
+      <a href="search-user.html" class="redirect-button">Search User's Notes</a>            
+      <button id="logout-btn" class="redirect-button">Logout</button>
+  </div>
+  <div class="filter-box">
+  <h2>Search Notes by Tags</h2>
+  <input type="text" id="tag-input" placeholder="Enter tags (comma-separated)">
+  <div class="filter-options">
+    <label><input type="radio" name="matchType" value="any" checked> Match any tag</label>
+    <label><input type="radio" name="matchType" value="all"> Match all tags</label>
+  </div>
+  <button onclick="searchNotes()">Search</button>
+</div>
+
+<div id="results"></div>
+  <script src="search-notes.js"></script>
+</body>
+</html>

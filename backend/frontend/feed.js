@@ -7,11 +7,11 @@ if (!userEmail)
 else 
   {
     let name = "";
-    fetch(`http://localhost:3000/api/users/name?email=${userEmail}`)
+    fetch(`/api/users/name?email=${userEmail}`)
     .then(res => res.json())
     .then(userData => {
         loggedInUser = userData.name;
-        return fetch(`http://localhost:3000/api/notes/author?author=${loggedInUser}`);
+        return fetch(`/api/notes/author?author=${loggedInUser}`);
       })
     .then(res => res.json())
     .then(notes => {
@@ -81,7 +81,7 @@ else
       console.log("noteId: ", noteId);
     if (!confirm("Are you sure you want to delete this note?")) return;
 
-    fetch(`http://127.0.0.1:3000/api/notes/${noteId}`, {
+    fetch(`/api/notes/${noteId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -145,11 +145,11 @@ function submitNewNote() {
   if (!userEmail) return alert("User not logged in.");
 
   // Fetch author name from email
-  fetch(`http://localhost:3000/api/users/name?email=${userEmail}`)
+  fetch(`/api/users/name?email=${userEmail}`)
     .then(res => res.json())
     .then(user => {
       const author = user.name;
-      return fetch("http://localhost:3000/api/notes", {
+      return fetch("/api/notes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -198,7 +198,7 @@ function submitEdit() {
     loggedInUser: currentLoggedInUser
   };
 
-  fetch(`http://localhost:3000/api/notes/${currentNoteId}`, {
+  fetch(`/api/notes/${currentNoteId}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(updatedNote)

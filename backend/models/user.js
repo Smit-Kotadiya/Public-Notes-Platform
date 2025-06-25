@@ -7,4 +7,3 @@ const userSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("User", userSchema);
-//String, Type Raus, Typ Rein und Ids automatisch generiert
