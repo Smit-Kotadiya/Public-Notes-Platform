@@ -1,0 +1,40 @@
+  app2:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend-frontend2
+    expose:
+      - "3000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/test_db
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mongo
+    working_dir: /app
+    volumes:
+        - ./backend:/app
+    networks:
+      - app_net
+
+  haproxy:
+    image: haproxy:2.9
+    ports:
+      - "80:80"
+      - "8404:8404" #For seeing stats and testing, if haproxy is working
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    depends_on:
+      - app1
+      - app2
+    networks:
+      - app_net
+networks:
+  app_net:
+    driver: bridge
+
+    networks:
+      - app_net
+
+      networks:
+      - app_net

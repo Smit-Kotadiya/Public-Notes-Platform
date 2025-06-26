@@ -8,14 +8,16 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - app_net
 
-  backend:
+  app1:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: node-backend
-    ports:
-      - "3000:3000"
+    container_name: backend-frontend1
+    expose:
+      - "3000"
     environment:
       - MONGO_URL=mongodb://mongo:27017/test_db
     env_file:
@@ -25,6 +27,46 @@ services:
     working_dir: /app
     volumes:
         - ./backend:/app
+    networks:
+      - app_net
       
+  app2:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend-frontend2
+    expose:
+      - "3000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/test_db
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mongo
+    working_dir: /app
+    volumes:
+        - ./backend:/app
+    networks:
+      - app_net
+
+  haproxy:
+    image: haproxy:2.9
+    container_name: haproxy-loadbalancer
+    ports:
+      - "80:80"
+      - "8404:8404"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    depends_on:
+      - app1
+      - app2
+    networks:
+      - app_net
+
 volumes:
   mongo-data:
+
+networks:
+  app_net:
+    driver: bridge
+

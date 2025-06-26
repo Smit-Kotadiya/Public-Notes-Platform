@@ -23,6 +23,7 @@ app.get("/", (req, res)=> {
   res.sendFile(path.join(__dirname, "frontend", "login.html"));
 });
 console.log("Frontend Up");
+
 //Connection to MongoDB
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
@@ -35,3 +36,4 @@ mongoose.connect(process.env.MONGO_URL, {
 });
 
 app.listen(3000, () => console.log("Server running on port 3000"));
+
