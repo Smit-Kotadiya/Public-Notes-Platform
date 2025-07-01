@@ -7,6 +7,7 @@ RUN zypper refresh && \
 COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
 
 EXPOSE 80
+#For checking Stats and verifying functionality of Haproxy
 EXPOSE 8404
 
 CMD ["haproxy", "-f", "/usr/local/etc/haproxy/haproxy.cfg", "-db"]

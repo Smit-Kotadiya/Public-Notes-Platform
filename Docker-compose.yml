@@ -9,7 +9,7 @@ services:
     volumes:
       - mongo-data:/data/db
     networks:
-      - internal_net
+      - db_net
 
   app1:
     build:
@@ -29,7 +29,7 @@ services:
         - ./backend:/app
     networks:
       - app_net
-      - internal_net
+      - db_net
       
   app2:
     build:
@@ -49,7 +49,7 @@ services:
         - ./backend:/app
     networks:
       - app_net
-      - internal_net
+      - db_net
   haproxy:
     build:
       context: ./haproxy
@@ -70,6 +70,6 @@ volumes:
 networks:
   app_net:
     driver: bridge
-  internal_net:
+  db_net:
     driver: bridge
 
