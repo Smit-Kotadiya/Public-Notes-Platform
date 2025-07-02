@@ -12,9 +12,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-#Added because Pods were not able to acces login page
-COPY ./frontend ./frontend
-
 COPY . .
 
 EXPOSE 3000
