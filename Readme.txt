@@ -5,3 +5,19 @@ I wrote: docker run --rm -v publicnotesplatform_mongo-data:/data alpine chown -R
 
 Check the localhost:8404/stats -username: admin -password: admin, to see if Haproxy is working. In the second table see the Total column in 
 session section. Refresh the login page at port 80 to see the Total number grow.
+
+#pull ingress
+
+
+# Clean up any broken installation
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+choco install kubernetes-helm (in administrator mode)
+helm uninstall ingress-nginx -n ingress-nginx
+kubectl delete namespace ingress-nginx
+
+# Reinstall the official ingress-nginx
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+
+helm install ingress-nginx ingress-nginx/ingress-nginx \
+  --namespace ingress-nginx --create-namespace

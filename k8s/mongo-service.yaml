@@ -2,10 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mongodb-service
+  namespace: pnp-smit
 spec:
   selector:
     app: mongodb
   ports:
     - port: 27017
       targetPort: 27017
-  type: ClusterIP
+      nodePort: 32018 #For Accessing this instance from MongoDB Compass
+  type: NodePort
