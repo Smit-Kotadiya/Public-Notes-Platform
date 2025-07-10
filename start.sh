@@ -1,14 +1,19 @@
 #!bin/bash
+minikube start
+
+minikube addons enable ingress
 
 kubectl create namespace pnp-smit
 
-kubectl apply -f app-deployment.yaml -n pnp-smit
-kubectl apply -f app-service.yaml -n pnp-smit
-kubectl apply -f app-ingress.yaml -n pnp-smit
+eval $(minikube docker-env)
 
-#Used Helm because my native Architecture was not Compataible with Ingress's Architecture. Ingress-Nginx-Controller kept Crashing
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
-helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
+docker build -t pnp-app ./backend
 
-kubectl port-forward pod/ingress-nginx-controller-578c564c54-9mqqv 8080:80 -n ingress-nginx
+docker build -t pnp-mongo ./mongo
+
+cd k8s
+
+kubectl apply -f ./ --namespace=pnp-smit
+
+kubect get pods --namespace=pnp-smit
+
