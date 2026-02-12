@@ -80,16 +80,17 @@ sudo chmod +x start.sh
     #minikube ip
 ```
 Further commands:
-
+'''
   sudo nano /etc/hosts
-
+'''
   Add following line at the top:
+  '''
   (minikube ip) app.local
-
+  '''
 Save and exit
-
+'''
 minikube tunnel
-
+'''
 In browser open:
 [app.local](http://app.local)
 
